@@ -29,13 +29,14 @@ produce output:
     Bielaruś vs Bielarus
 
 By default wrong language codes ignored. But this behavior could be changed by
-using string mode for really required language code. Just put exclamation mark
-before language code. For example:
+using strict mode. For all language codes that prepended with exclamation mark
+exception will be fired if any error (no conversion table, wrong format, empty).
+For example:
 
-    // following code do nothing because handler ru_ru not defined
+    // following code returns 'Привет' as is because handler ru_ru not defined
     echo Translit::object()->convert('Привет', 'ru_ru') . PHP_EOL;
 
-    // but next code fires Exception, because transliteration required
+    // but next code fires Exception, because strict mode have used
     echo Translit::object()->convert('Привет', '!ru_ru') . PHP_EOL;
 
 There are many sources of these tables which could be used - ISO and BGN/PCGN
