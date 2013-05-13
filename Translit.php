@@ -14,8 +14,9 @@
  * - ka - Georgian chars,
  * - hy - Armenian chars (converted to latin with diacritical),
  * - el - Greek chars (converted to latin with diacritical),
- * - cyrillic - all cyrillic chars according to ISO 9:1995
- * - latin - only latin chars without diacritical marks
+ * - cyrillic - all cyrillic chars according to ISO 9:1995,
+ * - latin - only latin chars without diacritical marks,
+ * - ascii - ASCII chars only, other chars will be replaced with question mark.
  *
  * Language codes could be combined by comma to handle more cases, e.g.
  *
@@ -132,7 +133,7 @@ class Translit
             $strict = true;
         }
 
-        if (!isset($this->languages[$code]))
+        if ($code && !isset($this->languages[$code]))
         {
             $dataFile = $this->getDataPath() . $code . '.php';
             $className = 'Translit' . ucfirst($code);
@@ -157,12 +158,12 @@ class Translit
             }
             else
             {
-                if (!class_exists($className) && file_exists($classFile))
+                if (!@class_exists($className) && file_exists($classFile))
                 {
                     include $classFile;
                 }
 
-                if (class_exists($className))
+                if (@class_exists($className))
                 {
                     $language = new $className;
                     if (method_exists($language, 'convert'))

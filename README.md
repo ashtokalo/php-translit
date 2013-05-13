@@ -16,8 +16,9 @@ translitaration tables could be refered by following language codes:
 * ka - Georgian chars,
 * hy - Armenian chars (converted to latin with diacritical),
 * el - Greek chars (converted to latin with diacritical),
-* cyrillic - all cyrillic chars according to ISO 9:1995
-* latin - only latin chars without diacritical marks
+* cyrillic - all cyrillic chars according to ISO 9:1995,
+* latin - only latin chars without diacritical marks,
+* ascii - only ASCII chars, all non ASCII will be replaced with question mark.
 
 Language codes could be combined by comma to handle more cases, e.g.
 
