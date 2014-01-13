@@ -55,7 +55,7 @@ class TranslitKa
             array_values($this->alphabet),
             preg_replace(
                 // make capital from first chars of sentences
-                '/(^|[\.\?\!]\s*)([a-z])/sx',
+                '/(^|[\.\?\!]\s*)([a-z])/se',
                 '"$1" . strtoupper("$2")',
                 $text)
         );
