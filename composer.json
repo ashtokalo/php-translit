@@ -10,7 +10,7 @@
         "email": "alexey@shtokalo.net",
         "homepage": "http://alexey.shtokalo.net",
         "role": "Developer"
-    }
+    },
     "require":
     {
         "php": ">=5.2.0"
