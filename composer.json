@@ -1,0 +1,7 @@
+{
+    "name": "ashtokalo/php-translit",
+    "description": "PHP library to convert text from one script to enother.",
+    "require": {
+        "php": ">=5.2.0",
+    }
+}
