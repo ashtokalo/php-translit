@@ -14,4 +14,5 @@ return array_merge(
     include (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'cyrillic.php'),
     include (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'el.php'),
     include (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'hy.php'),
-    include (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'kk.php'));
+    include (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'kk.php')),
+    include (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mk.php'));

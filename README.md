@@ -10,6 +10,7 @@ Main class Translit could be used as singleton or object itself. Built-in
 translitaration tables could be refered by following language codes:
 * ru - Russian cyrillic chars,
 * uk - Ukrainian cyrillic chars,
+* mk - Macedonian cyrillic chars,
 * be - Belarusian cyrillic chars (converted to latin with diacritical),
 * bg - Bulgarian cyrillic chars (converted to latin with diacritical),
 * kk - Kazakh cyrillic chars (converted to latin with diacritical),
