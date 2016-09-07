@@ -2,7 +2,7 @@
     "name": "ashtokalo/php-translit",
     "type": "library",
     "keywords": ["transliteration", "romanization", "latinization", "translit"],
-    "description": "PHP library to convert text from one script to enother.",
+    "description": "PHP library to convert text from one script to another.",
     "license": "MIT",
     "author":
     {
