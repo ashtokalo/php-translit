@@ -4,6 +4,7 @@
     "keywords": ["transliteration", "romanization", "latinization", "translit"],
     "description": "PHP library to convert text from one script to another.",
     "license": "MIT",
+    "version": "0.2.0",
     "author":
     {
         "name": "Alexey Shtokalo",
@@ -13,6 +14,15 @@
     },
     "require":
     {
-        "php": ">=5.2.0"
+        "php": ">=7.0"
+    },
+    "require-dev":
+    {
+        "phpunit/phpunit": "~7.0"
+    },
+    "autoload": {
+        "psr-4": {
+           "ashtokalo\\translit\\": "src/"
+        }
     }
 }

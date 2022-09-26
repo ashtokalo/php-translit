@@ -1,5 +1,9 @@
 <?php
 
+namespace ashtokalo\translit;
+
+use Exception;
+
 /**
  * Translit
  *
@@ -52,11 +56,14 @@ class Translit
     public $dataPath = '';
 
     /**
-     * Path to directory with transliteration classes.
-     *
-     * @var string empty string by default assumes directory with the class
+     * @var array list of classes used to transliterate language
      */
-    public $classPath = '';
+    public $classes = [
+        'be' => TranslitBe::class,
+        'ka' => TranslitKa::class,
+        'uk' => TranslitUk::class,
+        'ascii' => TranslitAscii::class,
+    ];
 
     /**
      * Converts given text to the Roman (Latin) script.
@@ -72,7 +79,7 @@ class Translit
      * @return string converted text
      * @throws Exception if handler not available or wrong (strict mode only)
      */
-    public function convert($text, $code)
+    public function convert(string $text, string $code): string
     {
         foreach (explode(',', $code) as $code)
         {
@@ -98,7 +105,7 @@ class Translit
      *
      * @return Translit
      */
-    public static function object($dataPath = '')
+    public static function object(string $dataPath = '')
     {
         static $object = null;
 
@@ -109,6 +116,11 @@ class Translit
         }
 
         return $object;
+    }
+
+    public function __invoke()
+    {
+        print_r(func_get_args());
     }
 
     /**
@@ -123,7 +135,7 @@ class Translit
      *
      * @throws Exception if handler not available or wrong (strict mode only)
      */
-    protected function getLanguage($code)
+    protected function getLanguage(string $code)
     {
         // all language codes prepended with exclamation mark really required
         $strict = false;
@@ -135,11 +147,25 @@ class Translit
 
         if ($code && !isset($this->languages[$code]))
         {
-            $dataFile = $this->getDataPath() . $code . '.php';
-            $className = 'Translit' . ucfirst($code);
-            $classFile = $this->getClassPath() . $className . '.php';
-
-            if (file_exists($dataFile))
+            if (class_exists($className = isset($this->classes[$code]) ? $this->classes[$code] : ''))
+            {
+                $language = new $className;
+                if (method_exists($language, 'convert'))
+                {
+                    if (property_exists($language, 'translit'))
+                    {
+                        $language->translit = $this;
+                    }
+                    $this->languages[$code] = $language;
+                }
+                else if ($strict)
+                {
+                    throw new Exception(
+                        sprintf('class "%s" does not have convert() method',
+                            $className));
+                }
+            }
+            else if (file_exists($dataFile = $this->getDataPath() . $code . '.php'))
             {
                 $language = include $dataFile;
                 if (is_array($language))
@@ -156,36 +182,10 @@ class Translit
                             gettype($language)));
                 }
             }
-            else
+            else if ($strict)
             {
-                if (!@class_exists($className) && file_exists($classFile))
-                {
-                    include $classFile;
-                }
-
-                if (@class_exists($className))
-                {
-                    $language = new $className;
-                    if (method_exists($language, 'convert'))
-                    {
-                        if (property_exists($language, 'translit'))
-                        {
-                            $language->translit = $this;
-                        }
-                        $this->languages[$code] = $language;
-                    }
-                    else if ($strict)
-                    {
-                        throw new Exception(
-                            sprintf('class "%s" does not have convert() method',
-                                $className));
-                    }
-                }
-                else if ($strict)
-                {
-                    throw new Exception(
-                        sprintf('language "%s" does not have handlers', $code));
-                }
+                throw new Exception(
+                    sprintf('language "%s" does not have handlers', $code));
             }
         }
 
@@ -197,30 +197,15 @@ class Translit
      *
      * @return string
      */
-    protected function getDataPath()
+    protected function getDataPath(): string
     {
         if (!$this->dataPath)
         {
-            $this->dataPath = dirname(__FILE__) . DIRECTORY_SEPARATOR .
+            $this->dataPath = __DIR__ . DIRECTORY_SEPARATOR .
                 'data' . DIRECTORY_SEPARATOR;
         }
 
         return $this->dataPath;
-    }
-
-    /**
-     * Returns path to directory with transliteration classes
-     *
-     * @return string
-     */
-    protected function getClassPath()
-    {
-        if (!$this->classPath)
-        {
-            $this->classPath = dirname(__FILE__) . DIRECTORY_SEPARATOR;
-        }
-
-        return $this->classPath;
     }
 
     /**
