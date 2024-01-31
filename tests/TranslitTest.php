@@ -16,6 +16,7 @@ class TranslitTest extends TestCase
         $this->assertEquals('Ukraina', Translit::object()->convert('Україна', 'cyrillic,latin'));
         $this->assertEquals('Bielaruś', Translit::object()->convert('Беларусь', 'be'));
         $this->assertEquals('Bielarus', Translit::object()->convert('Беларусь', 'be,latin'));
+        $this->assertEquals('Konstantinos', Translit::object()->convert('Κωνσταντίνος', 'el,latin'));
         // test undefined language
         $this->assertEquals('мир', Translit::object()->convert('мир', 'cyr'));
         // and strict mode
