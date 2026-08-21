@@ -1,8 +1,10 @@
+
+
 translit
 ========
 
 `translit` is a PHP library to convert text from one script to another.
-Currently it assume conversion of Cyrillic, Georgian, Armenian and Greek
+Currently it assumes conversion of Cyrillic, Georgian, Armenian and Greek
 scripts into Roman (Latin). Cyrillic has sub-groups for Russian, Ukrainian,
 Belarusian, Bulgarian and Kazakh languages with custom rules.
 
